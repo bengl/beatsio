@@ -12,14 +12,14 @@
 # Press Ctrl-S (win/lin) or Cmd-S (mac) to run your code
 # Audiolet is included/initialized for your convenience @audio. Here is a example:
 
-osc = new Sine @audio, 440
+osc = new Sine @audio, Note.fromLatin('C4').frequency()
 osc.connect @audio.output
 
 # Notes:
 # 1. Don't initialize Audiolet. It's already there for you, and multiple Audiolets get messy.
 # 2. You can kill all the sounds by replacing everything here with "killSound()"
-# 3. http://usefulgifs.com/technoviking.gif
-
+# 3. Music.js is also included, and is used in the example.
+# 4. http://usefulgifs.com/technoviking.gif
 
 
 
@@ -42,6 +42,7 @@ osc.connect @audio.output
 	<script src="ace/mode-coffee.js" type="text/javascript" charset="utf-8"></script>
 	<script src="scripts/coffee-script.js"></script>
 	<script src="scripts/audiolet.js"></script>
+	<script src="scripts/music.js"></script>
 	<script src="scripts/app.js"></script>
 
 </body>
