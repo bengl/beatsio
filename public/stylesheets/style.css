@@ -1,0 +1,18 @@
+body {
+	overflow: hidden;
+	background: #141414;
+}
+.ace_gutter {
+	display: none;
+}
+.ace_sb {
+	display: none;
+}
+#editor { 
+	margin: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
