@@ -1,15 +1,23 @@
-// Need to be able to handle 
+// Need to be able to handle reloads 
 audioNodes = [];
 AudioletNode.prototype.oldConnect = AudioletNode.prototype.connect;
 AudioletNode.prototype.connect = function(node,output,input) {
 	if (node instanceof AudioletDestination) audioNodes.push(this);
 	return this.oldConnect(node,output,input);
 }
-var disconnectAudioNodes = function(){
+
+// Kill it with fire!
+killSound = function(){
 	for (var i = 0; i < audioNodes.length; i++) {
 		audioNodes[i].disconnect(audio.output);
 	}
 };
+
+// The Bs
+var bfreq = function(note){return Note.fromLatin(note).frequency()};
+var bsine = function(note){return new Sine(window.audio,isNaN(note)?bfreq(note):note);};
+var bsaw = function(note){return new Saw(window.audio,isNaN(note)?bfreq(note):note);};
+var bcon = function(node){node.connect(window.audio.output)};
 
 window.onload = function() {
 	// ACE init
@@ -35,7 +43,6 @@ window.onload = function() {
 		},
 		exec: function(env, args, request) {
 			try {
-				window.killSound = disconnectAudioNodes;
 				killSound();
 				CoffeeScript.compile(editor.getSession().getValue(),{bare:true});
 				CoffeeScript.run(editor.getSession().getValue(),{bare:true});
