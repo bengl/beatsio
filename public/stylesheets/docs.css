@@ -1,0 +1,19 @@
+body{
+	font-family: 'Anonymous Pro', sans-serif;
+	margin: auto;
+	width:600px;
+	background: black;
+	color: lightgray;
+}
+code{
+	font-family: 'Anonymous Pro', sans-serif;
+	color: green;
+}
+dt{
+	font-weight:bold;
+}
+a{
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+}

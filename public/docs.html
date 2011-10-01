@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+	<head>
+		<link href='http://fonts.googleapis.com/css?family=Anonymous+Pro:400,400italic,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" media="screen" href="stylesheets/docs.css" />
+		
+		<title>Beats.IO</title>
+	</head>
+	<body>
+		<h1>Beats.IO</h1>
+		<p><a href="http://beats.io">Beats.IO</a> is a <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> <a href="http://en.wikipedia.org/wiki/Live_coding">live coding</a> environment designed to make it easy to make sounds and music from inside a web browser. It works on recent builds of Chrome and Firefox and is built on a few awesome frameworks and libraries.</p>
+		<p>To run the code you've written, try Cmd-S (mac) or Ctrl-S (win/lin). <a href="http://oampo.github.com/Audiolet/">Audiolet.js</a> and <a href="https://github.com/GregJ/music.js">Music.js</a> are provided. Music.js can be used directly, and Audiolet is pre-initialized as <code>@audio</code>. In addition, some convenience functions are provided to make live coding easier and faster. The <code>killSounds</code> function is particularly useful when things get out of hand.</p>
+		<h3>API</h3>
+		<dl class="api">
+
+			<dt>bcon(node)
+			<dd>Adds a node to @audio.output.
+
+			<dt>bdis(node)
+			<dd>Remove a node from @audio.output.
+
+			<dt>bfreq(note)
+			<dd>Returns a frequency, given a Latin-style note (i.e. <code>bfreq('C4') === 261.6255653005986</code>)
+
+			<dt>bsine(noteOrFreq)
+			<dd>Returns sine wave generator, given a frequency or note. Use it with bcon to make sound!
+
+			<dt>bsaw(noteOrFreq)
+			<dd>Like bsine except for saw waves.
+
+			<dt>killSounds()
+			<dd>Removes all nodes from output, thus killing all the sounds.
+		</dl>
+
+		<br><br><br><br><br><br>
+		<p><em>Made by <a href="http://twitter.com/bengl">@bengl</a></em></p>
+	</body>
+</html>
