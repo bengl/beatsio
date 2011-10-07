@@ -43,8 +43,8 @@ window.onload = function() {
 	// ACE init
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/twilight");
-	var CoffeeMode = require("ace/mode/coffee").Mode;
-	editor.getSession().setMode(new CoffeeMode());
+	var JavaScriptMode = require("ace/mode/javascript").Mode;
+	editor.getSession().setMode(new JavaScriptMode());
 	// ACE style crap
 	editor.setShowPrintMargin(false);
 	editor.setHighlightActiveLine(false);
@@ -63,8 +63,7 @@ window.onload = function() {
 		},
 		exec: function(env, args, request) {
 			try {
-				CoffeeScript.compile(editor.getSession().getValue(),{bare:true});
-				CoffeeScript.run(editor.getSession().getValue(),{bare:true});
+				eval(editor.getSession().getValue());
 			} catch (e) {
 				console.log(e);
 			}
