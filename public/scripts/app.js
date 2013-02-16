@@ -52,13 +52,13 @@ window.onload = function() {
 	document.getElementById('editor').style.fontSize='16px';
 	// Audiolet init.
 	window.audio = new Audiolet(); // I'm okay with global scope here.
-  // Handle Cmd-S
+  // Handle saving
 	var canon = require('pilot/canon');
 	canon.addCommand({
 		name: 'run',
 		bindKey: {
-			win: 'Ctrl-S',
-			mac: 'Command-S',
+			win: 'Esc',
+			mac: 'Esc',
 			sender: 'editor'
 		},
 		exec: function(env, args, request) {
