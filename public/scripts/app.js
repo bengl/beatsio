@@ -9,34 +9,34 @@ Array.prototype.remove = function(from, to) {
 audioNodes = [];
 AudioletNode.prototype.oldConnect = AudioletNode.prototype.connect;
 AudioletNode.prototype.connect = function(node,output,input) {
-	if (node instanceof AudioletDestination) audioNodes.push(this);
-	return this.oldConnect(node,output,input);
+  if (node instanceof AudioletDestination) audioNodes.push(this);
+  return this.oldConnect(node,output,input);
 }
 
 // Kill it with fire!
 var killSound = function(){
-	for (var i = 0; i < audioNodes.length; i++) {
-		audioNodes[i].disconnect(audio.output);
-	}
-	audioNodes = [];
+  for (var i = 0; i < audioNodes.length; i++) {
+    audioNodes[i].disconnect(audio.output);
+  }
+  audioNodes = [];
 };
 
 // The Bs
 var bfreq = function(note){
-	return Note.fromLatin(note).frequency()
+  return Note.fromLatin(note).frequency()
 };
 var bsine = function(note){
-	return new Sine(window.audio,isNaN(note)?bfreq(note):note);
+  return new Sine(window.audio,isNaN(note)?bfreq(note):note);
 };
 var bsaw = function(note){
-	return new Saw(window.audio,isNaN(note)?bfreq(note):note);
+  return new Saw(window.audio,isNaN(note)?bfreq(note):note);
 };
 var bcon = function(node){
-	node.connect(window.audio.output);
+  node.connect(window.audio.output);
 };
 var bdis = function(node){
-	audioNodes.remove(node);
-	node.disconnect(window.audio.output);
+  audioNodes.remove(node);
+  node.disconnect(window.audio.output);
 };
 
 window.onload = function() {

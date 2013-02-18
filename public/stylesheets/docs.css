@@ -1,25 +1,25 @@
 body{
-	font-family: 'Anonymous Pro', sans-serif;
-	margin: auto;
-	width:600px;
-	background: black;
-	color: lightgray;
+  font-family: 'Anonymous Pro', sans-serif;
+  margin: auto;
+  width:600px;
+  background: black;
+  color: lightgray;
 }
 code{
-	font-family: 'Anonymous Pro', sans-serif;
-	color: green;
+  font-family: 'Anonymous Pro', sans-serif;
+  color: green;
 }
 dt{
-	font-weight:bold;
+  font-weight:bold;
 }
 a{
-	text-decoration: none;
-	font-weight: bold;
-	color: white;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
 }
 .warningtext{
-	background: #300;
-	color: red;
-	padding: 5px;
-	border: 1px solid;
+  background: #300;
+  color: red;
+  padding: 5px;
+  border: 1px solid;
 }
