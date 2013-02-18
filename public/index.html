@@ -7,27 +7,16 @@
 </head>
 <body>
 
-  <div id="editor">Documentation = "http://beats.io/docs.html"
+  <div id="editor">
+# Beats.IO
+    
+# http://beats.io/docs.html
     
 # Example:
-bcon bsine 'C4'
+twinkle = bseq ['C4', 'C4', 'G4', 'G4', 'A4', 'A4', 'G4']
+bplay twinkle, 1, (note) -> bcon bsimple note
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# http://usefulgifs.com/technoviking.gif
 # Made by @bengl</div>
 	<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 	<script src="ace/theme-twilight.js" type="text/javascript" charset="utf-8"></script>
