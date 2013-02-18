@@ -111,7 +111,7 @@ window.onload = function () {
 			mac: 'Esc',
 			sender: 'editor'
 		},
-		exec: unction(env, args, request) {
+		exec: function(env, args, request) {
       try {
         this.audio = window.audio;
         CoffeeScript.run(editor.getSession().getValue(),{bare:true});
