@@ -39,12 +39,62 @@ var bdis = function(node){
   node.disconnect(window.audio.output);
 };
 
-window.onload = function() {
+var group = function(ins, outs, initializer) {
+  return new Class({
+    Extends: AudioletGroup,
+    initialize: function(){
+      AudioletGroup.prototype.initialize.apply(this, [arguments[0], ins, outs]);
+      initializer.apply(this, arguments);
+    }
+  });
+};
+
+var SimpleSynth = group(0,1,function(audiolet, freq){
+  if (isNaN(freq)) freq = bfreq(freq);
+  this.sine = new Sine(audiolet, freq);
+  this.modulator = new Saw(audiolet, 2 * freq);
+  this.modulatorMulAdd = new MulAdd(audiolet, freq / 2, freq);
+  this.gain = new Gain(this.audiolet);
+  this.envelope = new PercussiveEnvelope(this.audiolet, 1, 0.2, 0.5, 
+    function(){
+      this.audiolet.scheduler.addRelative(0, this.remove.bind(this));
+    }.bind(this)
+  );
+  this.modulator.connect(this.modulatorMulAdd);
+  this.modulatorMulAdd.connect(this.sine);
+  this.envelope.connect(this.gain, 0, 1);
+  this.sine.connect(this.gain)
+  this.gain.connect(this.outputs[0]);
+});
+
+var bsimple = function(note) {
+  return new SimpleSynth(window.audio, note);
+};
+
+var bplay = function(freqPattern, durationPattern, func) {
+  window.audio.scheduler.play([freqPattern], durationPattern, func);
+};
+
+var bseq = function(list, repeats, offset){
+  return new PSequence(list, repeats, offset);
+};
+
+window.onload = function () {
+  // check if saved stuff
+  var hash = window.location.hash;
+  if (hash && hash != "") {
+    var content = decodeURIComponent(hash.slice(1, hash.length));
+    document.getElementById("editor").innerHTML = content;
+  }
 	// ACE init
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/twilight");
 	var CoffeeMode = require("ace/mode/coffee").Mode;
 	editor.getSession().setMode(new CoffeeMode());
+  // ACE handle change
+  editor.getSession().on('change', function(e) {
+    window.location.hash = "#"+encodeURIComponent(editor.getSession().getValue());
+  });
 	// ACE style crap
 	editor.setShowPrintMargin(false);
 	editor.setHighlightActiveLine(false);
@@ -61,14 +111,13 @@ window.onload = function() {
 			mac: 'Esc',
 			sender: 'editor'
 		},
-		exec: function(env, args, request) {
-			try {
-				CoffeeScript.compile(editor.getSession().getValue(),{bare:true});
-				CoffeeScript.run(editor.getSession().getValue(),{bare:true});
-			} catch (e) {
-				console.log(e);
-			}
-		}
+		exec: unction(env, args, request) {
+      try {
+        this.audio = window.audio;
+        CoffeeScript.run(editor.getSession().getValue(),{bare:true});
+      } catch (e) {
+        console.log(e);
+      }
+    }
 	});
 };
-
