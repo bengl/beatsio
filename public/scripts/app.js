@@ -49,6 +49,50 @@ var group = function(ins, outs, initializer) {
   });
 };
 
+// Adapted from Audiolet Demo
+var Kick = group(0,1,function(audiolet){
+  // Main sine oscillator
+  this.sine = new Sine(audiolet, 80);
+
+  // Pitch Envelope - from 81 to 1 hz in 0.3 seconds
+  this.pitchEnv = new PercussiveEnvelope(audiolet, 1, 0.001, 0.3);
+  this.pitchEnvMulAdd = new MulAdd(audiolet, 80, 1);
+
+  // Gain Envelope
+  this.gainEnv = new PercussiveEnvelope(audiolet, 1, 0.001, 0.3,
+      function() {
+          // Remove the group ASAP when env is complete
+          this.audiolet.scheduler.addRelative(1,
+                                              this.remove.bind(this));
+      }.bind(this)
+  );
+  this.gainEnvMulAdd = new MulAdd(audiolet, 0.7);
+  this.gain = new Gain(audiolet);
+  this.upMixer = new UpMixer(audiolet, 2);
+
+  // Connect oscillator
+  this.sine.connect(this.gain);
+
+  // Connect pitch envelope
+  this.pitchEnv.connect(this.pitchEnvMulAdd);
+  this.pitchEnvMulAdd.connect(this.sine);
+
+  // Connect gain envelope
+  this.gainEnv.connect(this.gainEnvMulAdd);
+  this.gainEnvMulAdd.connect(this.gain, 0, 1);
+  this.gain.connect(this.upMixer);
+  this.upMixer.connect(this.outputs[0]);
+});
+
+var bkick = function() {
+  return new Kick(window.audio); 
+};
+
+var bloop = function(func, time) {
+  time = typeof time !== 'undefined' ? time : 1
+  window.audio.scheduler.play([], time, func); 
+};
+
 var SimpleSynth = group(0,1,function(audiolet, freq){
   if (isNaN(freq)) freq = bfreq(freq);
   this.sine = new Sine(audiolet, freq);
@@ -72,12 +116,17 @@ var bsimple = function(note) {
 };
 
 var bplay = function(freqPattern, durationPattern, func) {
+  if (freqPattern instanceof Array) freqPattern = [freqPattern];
   window.audio.scheduler.play([freqPattern], durationPattern, func);
 };
 
 var bseq = function(list, repeats, offset){
   return new PSequence(list, repeats, offset);
 };
+
+var btempo = function(tempo) {
+  return window.audio.scheduler.setTempo(tempo);
+}
 
 window.onload = function () {
   // check if saved stuff
@@ -117,6 +166,7 @@ window.onload = function () {
         CoffeeScript.run(editor.getSession().getValue(),{bare:true});
       } catch (e) {
         console.log(e);
+        throw e;
       }
     }
 	});
