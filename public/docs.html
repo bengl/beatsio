@@ -11,7 +11,8 @@
 		<h5>(v0.0.1)</h5>
 		<p class="warningtext">WARNING: This software is not yet production-quality. In fact, it's pretty much not any quality at all yet. Work is in progress, but use at your own risk.</p>
 		<p><a href="http://beats.io">Beats.IO</a> is a <a href="http://jashkenas.github.com/coffee-script/">CoffeeScript</a> <a href="http://en.wikipedia.org/wiki/Live_coding">live coding</a> environment designed to make it easy to make sounds and music from inside a web browser. It works on recent builds of Chrome and Firefox and is built on a few awesome frameworks and libraries.</p>
-		<p>To run the code you've written, try hitting Esc. <a href="http://oampo.github.com/Audiolet/">Audiolet.js</a> and <a href="https://github.com/GregJ/music.js">Music.js</a> are provided. Music.js can be used directly, and Audiolet is pre-initialized as <code>@audio</code>. In addition, some convenience functions are provided to make live coding easier and faster. The <code>killSound</code> function is particularly useful when things get out of hand.</p>
+    <p>To run the code you've written, try hitting Esc. <a href="http://oampo.github.com/Audiolet/">Audiolet.js</a> and <a href="https://github.com/GregJ/music.js">Music.js</a> are provided. Music.js can be used directly, and Audiolet is pre-initialized as <code>@audio</code>. In addition, some convenience functions are provided to make live coding easier and faster. The <code>killSound</code> function is particularly useful when things get out of hand.</p>
+    <p>Your code is automatically saved in the URL, so you can pass the URL around, bookmark it, etc. If you refresh the page, the code stays, but all audio is stopped.</p>
 		<h3>API</h3>
 		<dl class="api">
 
@@ -29,6 +30,21 @@
 
       <dt>bsaw(noteOrFreq)
       <dd>Like bsine except for saw waves.
+
+      <dt>bsimple(noteOrFreq)</dt>
+      <dd>A simple synth that just plays one note. Use it with the sequencing commands below.</dd>
+
+      <dt>bkick()</dt>
+      <dd>Generates a synthetic kick drum sound. Use it with the sequencing commands below.</dd>
+
+      <dt>bseq(arrayOfNotes, numberOfTimesToLoop)<dt>
+      <dd>A thin wrapper around Audiolet's PSequence, to allow you to make note sequences.</dd>
+
+      <dt>bplay(sequence, noteDuration, func)<dt>
+      <dd>Plays a sequence using a node in the func. The frequency at each step in the sequence is passed in as a parameter to func.</dd>
+
+      <dt>bloop(func)</dt>
+      <dd>Loops an instrument. Equivalent to bplay([],1,func).
 
       <dt>killSound()
       <dd>Removes all nodes from output, thus killing all the sounds.
